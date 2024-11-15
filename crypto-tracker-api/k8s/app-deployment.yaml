@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-tracker-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto-tracker-app
+  template:
+    metadata:
+      labels:
+        app: crypto-tracker-app
+    spec:
+      containers:
+        - name: app
+          image: crypto-tracker:latest # Ensure to build and push this image to a container registry
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: DATABASE_URL
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: REDIS_PORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crypto-tracker-service
+spec:
+  selector:
+    app: crypto-tracker-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer

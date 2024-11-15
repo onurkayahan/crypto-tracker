@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  postgres:
+    image: timescale/timescaledb:latest-pg14
+    env_file:
+      - .env
+    ports:
+      - '5432:5432'
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+
+  postgres_admin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - '15432:80'
+
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+volumes:
+  timescale_data:
+  redis_data:

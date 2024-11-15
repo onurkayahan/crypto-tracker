@@ -1,0 +1,4 @@
+/* https://github.com/recharts/recharts/issues/1618#issuecomment-2345332765 */
+.recharts-wrapper svg {
+  overflow: inherit !important;
+}

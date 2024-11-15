@@ -1,0 +1,35 @@
+# Ignore Node.js dependencies (only if rebuilding them in Docker)
+node_modules
+npm-debug.log
+yarn.lock
+
+# Ignore environment variables and secrets
+.env
+*.env
+
+# Ignore local logs and temporary files
+logs
+*.log
+temp
+*.tmp
+
+# Ignore Git-related files
+.git
+.gitignore
+
+# Ignore Docker-related files (if not needed in the image)
+docker-compose.yml
+Dockerfile*
+
+# Ignore IDE and editor settings
+.vscode
+.idea
+*.swp
+*.swo
+
+# Ignore build output from local development
+dist
+coverage
+
+# Ignore Kubernetes files
+k8s/

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-tracker-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto-tracker-db
+  template:
+    metadata:
+      labels:
+        app: crypto-tracker-db
+    spec:
+      containers:
+        - name: db
+          image: timescale/timescaledb:latest-pg14
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: crypto-tracker-secrets
+                  key: POSTGRES_DB
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-storage
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crypto-tracker-db
+spec:
+  selector:
+    app: crypto-tracker-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

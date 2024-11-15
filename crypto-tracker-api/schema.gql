@@ -1,0 +1,17 @@
+type Query {
+  getCurrentPrice(pair: String!, source: String!): Float!
+  getHistoricalPrices(
+    pair: String!
+    source: String!
+    startDate: DateTime
+    endDate: DateTime
+  ): [PriceHistory!]!
+}
+
+type PriceHistory {
+  id: Int!
+  pair: String!
+  price: Float!
+  source: String!
+  timestamp: DateTime!
+}
