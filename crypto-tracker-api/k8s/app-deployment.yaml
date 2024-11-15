@@ -18,11 +18,11 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: DATABASE_URL
+            - name: POSTGRES_URI
               valueFrom:
                 secretKeyRef:
                   name: crypto-tracker-secrets
-                  key: DATABASE_URL
+                  key: POSTGRES_URI
             - name: REDIS_HOST
               valueFrom:
                 secretKeyRef:
