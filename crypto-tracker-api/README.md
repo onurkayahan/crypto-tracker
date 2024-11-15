@@ -71,13 +71,17 @@ Here are examples of GraphQL requests supported by the API:
 
    ```graphql
    query {
-     getCurrentPrice(pair: "TON/USDT") {
-       pair
-       price
-       timestamp
-       source
-     }
+     getCurrentPrice(pair: "TON/USDT", source: "CoinGecko")
    }
+   ```
+
+   ```graphql
+     returns
+     {
+       "data": {
+         "getCurrentPrice": 2.34
+       }
+     }
    ```
 
 1. **Get Historical Prices**
@@ -85,14 +89,45 @@ Here are examples of GraphQL requests supported by the API:
 
    ```graphql
    query {
-     getHistoricalPrices(pair: "TON/USDT") {
-       id
-       pair
-       price
-       timestamp
-       source
+     query {
+       getHistoricalPrices(
+         pair: "TON/USDT"
+         source: "CoinGecko"
+         startDate?: "2024-01-01T00:00:00Z"
+         endDate?: "2024-11-15T23:59:59Z"
+       ) {
+         id
+         pair
+         price
+         timestamp
+         source
+       }
      }
    }
+   ```
+
+   ```graphql
+   {
+   "data": {
+    "getHistoricalPrices": [
+      {
+        "id": 1,
+        "pair": "TON/USDT",
+        "price": 2.30,
+        "timestamp": "2024-01-01T00:00:00Z",
+        "source": "CoinGecko"
+      },
+      {
+        "id": 2,
+        "pair": "TON/USDT",
+        "price": 2.35,
+        "timestamp": "2024-01-02T00:00:00Z",
+        "source": "CoinGecko"
+      }
+    ]
+   }
+   }
+
    ```
 
 ### Caching Details
