@@ -154,6 +154,20 @@ Hypertables in TimescaleDB are optimized for time-series data, providing:
 - Advanced querying capabilities for time-series analytics.
 - Scalability to handle growing volumes of cryptocurrency price history data.
 
+### Why GraphQL?
+
+- Allows fetching only the required data, reducing over-fetching and under-fetching.
+- Flexible for dynamic client requirements like optional parameters (startDate, endDate).
+- Strongly-typed schema ensures reliable communication between client and server.
+
+### Why Hypertables and TimescaleDB?
+
+Hypertables in TimescaleDB are optimized for time-series data, providing:
+
+- Efficient storage and retrieval of large datasets.
+- Advanced querying capabilities for time-series analytics.
+- Scalability to handle growing volumes of cryptocurrency price history data.
+
 ### Why NestJS with Fastify?
 
 - **NestJS**: Provides a modular and scalable architecture with built-in support for GraphQL, making it ideal for rapidly growing applications.
